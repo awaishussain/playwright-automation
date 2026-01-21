@@ -15,7 +15,7 @@ test.describe('Authentication - Login', () => {
     const inventoryPage = new InventoryPage(page);
 
     // Step 1: Open login page
-    //await loginPage.open();
+    await loginPage.open();
 
     // Step 2: Perform login
     await loginPage.login('standard_user', 'secret_sauce');
