@@ -1,5 +1,7 @@
 import { Page, Locator } from '@playwright/test';
 import { BasePage } from './BasePage';
+import { getAutoHealingLocator } from '../utils/locatorHelper';
+
 
 export class LoginPage extends BasePage {
   readonly usernameInput: Locator;
@@ -20,9 +22,32 @@ export class LoginPage extends BasePage {
     await this.navigate('https://www.saucedemo.com/');
   }
 
-  async login(username: string, password: string): Promise<void> {
-    await this.usernameInput.fill(username);
-    await this.passwordInput.fill(password);
-    await this.loginButton.click();
-  }
+  async login(username: string, password: string) {
+    const usernameInput = await getAutoHealingLocator(this.page, [
+      '[data-test="username"]',
+      '#user-name',
+      'input[name="user-name"]'
+    ]);
+
+    const passwordInput = await getAutoHealingLocator(this.page, [
+      '[data-test="password"]',
+      '#password',
+      'input[name="password"]'
+    ]);
+
+    const loginButton = await getAutoHealingLocator(this.page, [
+      '[data-test="login-button"]',
+      '#login-button'
+    ]);
+
+    await usernameInput.fill(username);
+    await passwordInput.fill(password);
+    await loginButton.click();
+  
 }
+async isLoginSuccessful(): Promise<boolean> {
+  return this.page.url().includes('inventory.html');
+}
+}
+
+

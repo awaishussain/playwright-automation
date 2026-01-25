@@ -1,24 +1,26 @@
-import { test, expect } from '@playwright/test';
+//import { test } from '@playwright/test';
 import { LoginPage } from '../../src/pages/LoginPage';
-import { InventoryPage } from '../../src/pages/InventoryPage';
+import { test, expect } from '@playwright/test';
 
-test.describe('Authentication - Multiple Users', () => {
 
-  const users = [
-    { username: 'standard_user', password: 'secret_sauce' },
-    { username: 'performance_glitch_user', password: 'secret_sauce' }
-  ];
+
+const users = [
+  { username: 'standard_user', password: 'secret_sauce' },
+  { username: 'problem_user', password: 'secret_sauce' }
+];
+
+test.describe('Multi-login test', () => {
 
   for (const user of users) {
-    test(`User ${user.username} can login successfully`, async ({ page }) => {
-
+    test(`Login works for ${user.username}`, async ({ page }) => {
       const loginPage = new LoginPage(page);
-      const inventoryPage = new InventoryPage(page);
 
       await loginPage.open();
       await loginPage.login(user.username, user.password);
 
-      await inventoryPage.assertUserIsOnInventoryPage();
+      const loginSuccess = await loginPage.isLoginSuccessful();
+      expect(loginSuccess).toBe(true);
+
     });
   }
 
