@@ -6,6 +6,9 @@ export class InventoryPage extends BasePage {
   readonly inventoryItems: Locator;
   readonly firstAddToCartButton: Locator;
   readonly cartIcon: Locator;
+  readonly addToCartButtons: Locator;
+  readonly cartBadge: Locator;
+
 
 
   constructor(page: Page) {
@@ -16,6 +19,10 @@ export class InventoryPage extends BasePage {
 
     this.pageTitle = page.getByText('Products');
     this.inventoryItems = page.locator('.inventory_item');
+
+    this.addToCartButtons = page.locator('button[data-test^="add-to-cart"]');
+    this.cartBadge = page.locator('.shopping_cart_badge');
+
   }
 
   async assertUserIsOnInventoryPage(): Promise<void> {
@@ -34,5 +41,12 @@ export class InventoryPage extends BasePage {
   async goToCart(): Promise<void> {
   await this.cartIcon.click();
 }
+
+async assertCartBadgeCount(expectedCount: number): Promise<void> {
+  await expect(this.cartBadge).toBeVisible();
+  await expect(this.cartBadge).toHaveText(expectedCount.toString());
+  
+}
+
 
 }
