@@ -15,7 +15,7 @@ test('User can add item to cart', async ({ page }) => {
   await inventoryPage.addFirstItemToCart();
   await inventoryPage.goToCart();
 
-  await cartPage.assertItemIsAddedToCart();
+  await cartPage.assertItemPresentInCart();
 
 
 

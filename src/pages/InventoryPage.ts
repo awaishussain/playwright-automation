@@ -8,6 +8,7 @@ export class InventoryPage extends BasePage {
   readonly cartIcon: Locator;
   readonly addToCartButtons: Locator;
   readonly cartBadge: Locator;
+  
 
 
 
@@ -44,9 +45,21 @@ export class InventoryPage extends BasePage {
 
 async assertCartBadgeCount(expectedCount: number): Promise<void> {
   await expect(this.cartBadge).toBeVisible();
-  await expect(this.cartBadge).toHaveText(expectedCount.toString());
+  const actualCount = await this.cartBadge.textContent();
+
+  console.log(`Cart badge count is: ${actualCount}`);
+await expect(this.cartBadge).toHaveText(expectedCount.toString());
   
 }
+
+async addFirstProductToCart(): Promise<void> {
+  await this.addToCartButtons.first().click();
+}
+
+async clickCart(): Promise<void> {
+  await this.cartIcon.click();
+}
+
 
 
 }

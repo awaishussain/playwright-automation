@@ -17,7 +17,7 @@ test.describe('Inventory - Add to Cart Badge', () => {
 
     // Verify cart badge
     await inventoryPage.assertCartBadgeCount(1);
-      await page.waitForTimeout(5000); // 5 seconds
+      //await page.waitForTimeout(5000); // 5 seconds
   });
 
 });
